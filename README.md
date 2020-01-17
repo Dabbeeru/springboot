@@ -300,4 +300,23 @@ kubectl delete serviceaccount --namespace kube-system tiller
 
 kubectl get nodes -o wide
     
+    
+    
+    
+    
+    Installing jenkins with helm charts
+    
+    prerequisites
+    
+    install the helm
+    https://helm.sh/docs/intro/install/
+    Initialize helm:
+kubectl create serviceaccount --namespace kube-system tiller
+kubectl create clusterrolebinding tiller-cluster-rule --clusterrole=cluster-admin --serviceaccount=kube-system:tiller
+kubectl create clusterrolebinding tiller-binding --clusterrole=cluster-admin --serviceaccount kube-system:tiller
+helm init --service-account tiller
+Setup RBAC:
+kubectl apply -f https://raw.githubusercontent.com/jenkinsci/kubernetes-plugin/master/src/main/kubernetes/service-account.yml
+kubectl create clusterrolebinding jenkins --clusterrole cluster-admin --serviceaccount=jenkins:default
+
 
